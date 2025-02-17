@@ -19,7 +19,7 @@ pub fn problem001a() i64 { //this doesn't need to be faster, but why not
     const range_end = 1000;
     var needle: u32 = 0;
     const big_incr = 15;
-    const residuals = 3 + 5 + 6 + 9 + 10 + 12;
+
     //first big fast loop
     while (true) {
         needle += big_incr;
@@ -28,7 +28,7 @@ pub fn problem001a() i64 { //this doesn't need to be faster, but why not
             break;
         }
         // each 15 is comprised of the following things we care about (n*15 - {0,3,5,6,9,10,12})
-        answer += needle * 7 - residuals;
+        answer += needle * 7 - comptime (3 + 5 + 6 + 9 + 10 + 12);
     }
     if (false) {
         return answer;
