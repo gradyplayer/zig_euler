@@ -13,11 +13,13 @@ pub fn problem001() i64 {
 
 // 0.000002 seconds
 // 0.000002 seconds
+// and it took: 0.000001 seconds (after addition was done at compiletime)
 pub fn problem001a() i64 { //this doesn't need to be faster, but why not
     var answer: u32 = 0;
     const range_end = 1000;
     var needle: u32 = 0;
     const big_incr = 15;
+    const residuals = 3 + 5 + 6 + 9 + 10 + 12;
     //first big fast loop
     while (true) {
         needle += big_incr;
@@ -26,7 +28,7 @@ pub fn problem001a() i64 { //this doesn't need to be faster, but why not
             break;
         }
         // each 15 is comprised of the following things we care about (n*15 - {0,3,5,6,9,10,12})
-        answer += needle * 7 - (12 + 10 + 9 + 6 + 5 + 3);
+        answer += needle * 7 - residuals;
     }
     if (false) {
         return answer;

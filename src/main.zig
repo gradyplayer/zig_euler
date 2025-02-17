@@ -1,5 +1,5 @@
 const std = @import("std");
-pub const problem = @import("project_euler_001.zig").problem001; //change this to reflect the function you are testing
+pub const problem = @import("project_euler_001.zig").problem001a; //change this to reflect the function you are testing
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
