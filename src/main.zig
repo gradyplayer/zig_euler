@@ -1,14 +1,14 @@
 const std = @import("std");
-pub const problem = @import("project_euler_001.zig").problem001;
+pub const problem = @import("project_euler_001.zig").problem001; //change this to reflect the function you are testing
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
 
-    const start_time = std.time.milliTimestamp();
+    const start_time = std.time.nanoTimestamp();
     const answer = problem();
-    const end_time = std.time.milliTimestamp();
+    const end_time = std.time.nanoTimestamp();
 
-    std.debug.print("The Answer is: {}\n\t and it took ({d}) seconds", .{ answer, @as(f32, @floatFromInt(end_time - start_time)) / 1000.0 });
+    std.debug.print("The Answer is: {}\n  and it took: {d} seconds\n", .{ answer, @as(f64, @floatFromInt(end_time - start_time)) / 1000000000.0 });
 }
 
 test "simple test" {
