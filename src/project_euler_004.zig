@@ -45,13 +45,40 @@ pub fn problem004() u64 {
     // Find the largest palindrome made from the product of two 3-digit numbers.
     var highest: u64 = 0;
     //do this the worst possible way;
-    for (1..1000) |i| {
-        for (1..1000) |j| {
+    for (100..1000) |i| {
+        for (100..1000) |j| {
             const test_n = i * j;
             if (isPalendrome(test_n) and test_n > highest) {
                 highest = test_n;
             }
         }
+    }
+
+    return highest;
+}
+
+//The Answer is: 906609
+//  and it took: 0.02851 seconds
+
+pub fn problem004a() u64 {
+    // A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91*99
+    // Find the largest palindrome made from the product of two 3-digit numbers.
+    var highest: u64 = 0;
+    //do this the worst possible way;
+    var i: u32 = 999;
+    while (i >= 100) {
+        var j: u32 = 999;
+        while (j >= 100) {
+            const test_n = i * j;
+            if (test_n < highest) {
+                break;
+            }
+            if (isPalendrome(test_n) and test_n > highest) {
+                highest = test_n;
+            }
+            j -= 1;
+        }
+        i -= 1;
     }
 
     return highest;
