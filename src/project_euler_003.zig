@@ -16,6 +16,7 @@ fn isPrime(i: u64) bool {
     return true;
 }
 
+// 0.003301 seconds ... fast enough that I don't want to invent a seive yet
 pub fn problem003() u64 {
     //largest prime factor of 600851475143
     const big = 600851475143;
