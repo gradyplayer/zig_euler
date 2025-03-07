@@ -1,25 +1,6 @@
 const std = @import("std");
-
-fn product_of_slice_unlimited(slc: []const u8) u128 {
-    var answer: u128 = 1;
-    for (slc) |i| {
-        answer *= i - '0';
-    }
-    return answer;
-}
-
-fn product_of_slice(slc: []const u8, max_len: u8) u128 {
-    var answer: u128 = 0;
-    for (0..slc.len - max_len) |i| {
-        const this_slice_len = @min(@as(usize, 13), @as(usize, slc.len - i));
-        const slc2 = slc[i..this_slice_len];
-        if (product_of_slice_unlimited(slc2) > answer) {
-            answer = product_of_slice_unlimited(slc2);
-        }
-    }
-    return answer;
-}
-
+//The Answer is: 23514624000
+//  and it took: 0.000055 seconds
 pub fn problem008() u128 {
     const str_of_digits =
         "73167176531330624919225119674426574742355349194934" ++
@@ -42,63 +23,21 @@ pub fn problem008() u128 {
         "84580156166097919133875499200524063689912560717606" ++
         "05886116467109405077541002256983155200055935729725" ++
         "71636269561882670428252483600823257530420752963450";
-    // this will be super fast to cut through the whole thing by 13... but
-    // since multiplying by 0 reduces the product to 0...
-    // we could make slices, which I don't know how to do in zig...
 
-    // first count the number of slices...
-    //var ptr: usize = 0;
-    var num_slices: u8 = 0;
-    var skipping = false;
-    for (0..str_of_digits.len) |i| {
-        if (str_of_digits[i] == '0' and i < str_of_digits.len) {
-            skipping = true;
-        } else {
-            if (skipping) {
-                skipping = false;
-                num_slices += 1;
-            }
-        }
-    }
-    std.debug.print("number of slices = {}\n", .{num_slices});
-    const allocator = std.heap.page_allocator;
-    const slice_array = allocator.alloc([]const u8, num_slices + 1) catch |err| {
-        std.debug.print("alloc error {}", .{err});
-        return 0;
-    };
-
-    defer allocator.free(slice_array);
-
-    var start: usize = 0;
-    var end: usize = 0;
-    var slice_idx: usize = 0;
-    var valid = false;
-    for (0..str_of_digits.len) |i| {
-        if (str_of_digits[i] == '0' and i < str_of_digits.len) {
-            if (valid) {
-                slice_array[slice_idx] = str_of_digits[start .. end + 1];
-                slice_idx += 1;
-            }
-            valid = false;
-        } else {
-            if (valid == false) {
-                start = i;
-                valid = true;
-            }
-            end = i;
-        }
-    }
     var answer: u128 = 0;
-    const max_len = 13;
-    for (slice_array) |slc| {
-        const slc_prod: u128 = product_of_slice(slc, max_len);
-        if (slc_prod > answer) {
-            answer = slc_prod;
+    for (0..str_of_digits.len) |i| {
+        const start: usize = i;
+        const end: usize = @min(i + 13, str_of_digits.len);
+        var test_answer: u64 = 1;
+        for (start..end) |j| {
+            if (str_of_digits[j] == '0') {
+                break;
+            }
+            test_answer *= str_of_digits[j] - '0';
+            if (test_answer > answer) {
+                answer = test_answer;
+            }
         }
-        for (slc) |i| {
-            std.debug.print("{u} ", .{i});
-        }
-        std.debug.print("{s}", .{"\n"});
     }
 
     return answer;
